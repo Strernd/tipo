@@ -6,7 +6,7 @@ import (
 )
 
 var schema = `
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS offers;
 CREATE TABLE offers (
 	id       TEXT     PRIMARY KEY,
     products TEXT     NULL,
