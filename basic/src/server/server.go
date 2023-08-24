@@ -7,7 +7,7 @@ import (
 	"github.com/strernd/tipo/basic/controllers/offer"
 )
 
-func RunServer(oc offer.OfferController) {
+func RunServer(oc *offer.OfferController) {
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -35,5 +35,19 @@ func RunServer(oc offer.OfferController) {
 
 		c.JSON(http.StatusCreated, res)
 	})
+
+	r.GET("/offer/:email", func(c *gin.Context) {
+		email := c.Param("email")
+		res, err := oc.GetOffer(c, email)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+		c.JSON(http.StatusOK, res)
+	})
+
 	r.Run()
 }
